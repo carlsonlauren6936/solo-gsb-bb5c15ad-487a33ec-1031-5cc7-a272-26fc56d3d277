@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小册子骑马钉拼版</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>骑马钉小册子拼版</h1>
+    <p class="subtitle">每张纸 4 页 · 自动补空白页 · 自动适配混合尺寸与旋转页面</p>
+  </header>
+
+  <main>
+    <section class="card upload-card">
+      <label id="dropzone" class="dropzone" for="file-input">
+        <input type="file" id="file-input" accept="application/pdf,.pdf" hidden />
+        <span class="drop-icon">📄</span>
+        <span class="drop-text">点击选择 PDF，或将 PDF 拖拽到此处</span>
+        <span id="file-name" class="file-name"></span>
+      </label>
+      <button id="impose-btn" class="btn primary" disabled>开始拼版</button>
+      <p id="status" class="status" role="status"></p>
+    </section>
+
+    <section id="summary" class="card summary-card" hidden>
+      <h2>拼版结果</h2>
+      <ul class="summary-list">
+        <li>原始页数：<strong id="sum-source">-</strong> 页</li>
+        <li>末尾补白：<strong id="sum-blanks">-</strong> 页</li>
+        <li>用纸数量：<strong id="sum-sheets">-</strong> 张（每张正反 4 页）</li>
+        <li>统一面板：<strong id="sum-panel">-</strong></li>
+        <li>页面方向：<strong id="sum-orient">-</strong></li>
+      </ul>
+      <button id="download-btn" class="btn success">下载拼版 PDF</button>
+    </section>
+
+    <section id="preview" class="preview-section" hidden>
+      <h2>纸张预览（正面 / 背面）</h2>
+      <div class="legend">
+        <span class="legend-item"><span class="dot page"></span>原始页</span>
+        <span class="legend-item"><span class="dot blank"></span>补的空白页</span>
+      </div>
+      <p class="rule-hint">
+        折页方式：每张纸左右对折后骑马钉装订。正面左侧为大页码、右侧为小页码；
+        翻面后背面左右互换，逐张向内递进。
+      </p>
+      <div id="sheets" class="sheets"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>小型印刷店拼版工具 · Node.js + Express + pdf-lib</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

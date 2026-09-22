@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    image: booklet-imposer:latest
+    container_name: booklet-imposer
+    ports:
+      - "3000:3000"
+    environment:
+      # 服务监听端口（容器内端口，若修改需同步调整上方映射右侧端口）
+      PORT: "3000"
+      # 单个上传 PDF 的大小上限（MB）
+      MAX_FILE_SIZE_MB: "50"
+    restart: unless-stopped

@@ -1,0 +1,19 @@
+{
+  "name": "booklet-imposer",
+  "version": "1.0.0",
+  "description": "骑马钉小册子 PDF 拼版 Web 应用：每张纸 4 页，自动补空白页并按骑马钉规则重排",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/impose.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1"
+  }
+}
