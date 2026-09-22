@@ -96,6 +96,41 @@ main {
 .status.error { color: var(--danger); }
 .status.info { color: var(--brand-dark); }
 
+.options {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.option-check input { width: 16px; height: 16px; cursor: pointer; }
+.option-field {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+}
+.option-field input {
+  width: 80px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+}
+.option-hint { color: var(--muted); font-size: 12px; }
+
 .summary-card h2,
 .preview-section h2 {
   margin: 0 0 12px;
@@ -126,6 +161,34 @@ main {
 .rule-hint { font-size: 13px; color: var(--muted); margin: 0 0 16px; }
 
 .sheets { display: flex; flex-direction: column; gap: 18px; }
+
+.signature-summary { margin: 12px 0 4px; }
+.signature-hint { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+.signature-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.signature-table th,
+.signature-table td {
+  border: 1px solid var(--line);
+  padding: 7px 10px;
+  text-align: left;
+}
+.signature-table th { background: #eef3fb; font-weight: 700; }
+.signature-table tbody tr:nth-child(even) { background: #f8fafc; }
+.signature-table .sheet-nums { color: var(--brand-dark); font-weight: 600; }
+
+.signature-group {
+  background: #eef3fb;
+  border: 1px solid #c4d6f4;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+.signature-group:not(:first-child) { margin-top: 6px; }
 
 .sheet {
   background: var(--card);

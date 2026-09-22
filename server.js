@@ -3,7 +3,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const { imposePdf } = require('./lib/impose');
+const { imposePdf, parseMaxSheetsPerSignature } = require('./lib/impose');
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -36,7 +36,18 @@ app.post('/api/impose', upload.single('pdf'), async (req, res) => {
       return res.status(400).json({ error: '仅支持 PDF 文件' });
     }
 
-    const { pdfBytes, plan } = await imposePdf(req.file.buffer);
+    // 分册签帖模式：signatureMode=on 时启用；maxSheetsPerSignature 必须为 1～20 的整数
+    const options = {};
+    if (req.body && req.body.signatureMode === 'on') {
+      try {
+        options.maxSheetsPerSignature =
+          parseMaxSheetsPerSignature(req.body.maxSheetsPerSignature);
+      } catch (err) {
+        return res.status(400).json({ error: err.message });
+      }
+    }
+
+    const { pdfBytes, plan } = await imposePdf(req.file.buffer, options);
 
     // 页序方案为纯 ASCII JSON，放入自定义响应头供前端渲染预览
     res.setHeader('Content-Type', 'application/pdf');

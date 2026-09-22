@@ -20,19 +20,27 @@
         <span class="drop-text">点击选择 PDF，或将 PDF 拖拽到此处</span>
         <span id="file-name" class="file-name"></span>
       </label>
+
+      <div class="options">
+        <label class="option-check">
+          <input type="checkbox" id="signature-mode" />
+          <span>启用分册签帖模式（按纸张容量切分为多个骑马钉签帖）</span>
+        </label>
+        <label id="max-sheets-field" class="option-field" hidden>
+          <span>每帖最多纸张数：</span>
+          <input type="number" id="max-sheets" min="1" max="20" step="1" value="4" />
+          <span class="option-hint">1～20 张（每纸 4 页，即每帖 4～80 页；仅在每帖末尾补白）</span>
+        </label>
+      </div>
+
       <button id="impose-btn" class="btn primary" disabled>开始拼版</button>
       <p id="status" class="status" role="status"></p>
     </section>
 
     <section id="summary" class="card summary-card" hidden>
       <h2>拼版结果</h2>
-      <ul class="summary-list">
-        <li>原始页数：<strong id="sum-source">-</strong> 页</li>
-        <li>末尾补白：<strong id="sum-blanks">-</strong> 页</li>
-        <li>用纸数量：<strong id="sum-sheets">-</strong> 张（每张正反 4 页）</li>
-        <li>统一面板：<strong id="sum-panel">-</strong></li>
-        <li>页面方向：<strong id="sum-orient">-</strong></li>
-      </ul>
+      <ul id="summary-list" class="summary-list"></ul>
+      <div id="signature-summary" class="signature-summary" hidden></div>
       <button id="download-btn" class="btn success">下载拼版 PDF</button>
     </section>
 
