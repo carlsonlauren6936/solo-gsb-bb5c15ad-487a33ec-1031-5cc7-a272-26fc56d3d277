@@ -9,7 +9,7 @@
 <body>
   <header class="site-header">
     <h1>骑马钉小册子拼版</h1>
-    <p class="subtitle">每张纸 4 页 · 自动补空白页 · 自动适配混合尺寸与旋转页面</p>
+    <p class="subtitle">每张纸 4 页 · 自动补空白页 · 支持分册签帖 · 自动适配混合尺寸与旋转页面</p>
   </header>
 
   <main>
@@ -20,6 +20,19 @@
         <span class="drop-text">点击选择 PDF，或将 PDF 拖拽到此处</span>
         <span id="file-name" class="file-name"></span>
       </label>
+
+      <div class="options">
+        <label class="option-check" for="signature-toggle">
+          <input type="checkbox" id="signature-toggle" />
+          <span>启用分册签帖</span>
+        </label>
+        <div id="signature-options" class="option-inline" hidden>
+          <label for="sheets-per-signature">每帖最多纸张数（1～20）：</label>
+          <input type="number" id="sheets-per-signature" min="1" max="20" step="1" value="4" inputmode="numeric" />
+          <span class="option-hint">每帖容量 4 × 纸张数，按原页序连续切帖，仅在每帖末尾补白</span>
+        </div>
+      </div>
+
       <button id="impose-btn" class="btn primary" disabled>开始拼版</button>
       <p id="status" class="status" role="status"></p>
     </section>
@@ -27,12 +40,18 @@
     <section id="summary" class="card summary-card" hidden>
       <h2>拼版结果</h2>
       <ul class="summary-list">
+        <li id="sum-mode-item">装订模式：<strong id="sum-mode">-</strong></li>
+        <li id="sum-signature-count-item" hidden>签帖数量：<strong id="sum-signature-count">-</strong> 帖</li>
         <li>原始页数：<strong id="sum-source">-</strong> 页</li>
-        <li>末尾补白：<strong id="sum-blanks">-</strong> 页</li>
+        <li>末尾补白：<strong id="sum-blanks">-</strong> 页（各帖末尾合计）</li>
         <li>用纸数量：<strong id="sum-sheets">-</strong> 张（每张正反 4 页）</li>
         <li>统一面板：<strong id="sum-panel">-</strong></li>
         <li>页面方向：<strong id="sum-orient">-</strong></li>
       </ul>
+      <div id="signature-list-wrap" class="signature-list-wrap" hidden>
+        <h3>各帖明细</h3>
+        <ul id="signature-list" class="signature-list"></ul>
+      </div>
       <button id="download-btn" class="btn success">下载拼版 PDF</button>
     </section>
 
@@ -44,7 +63,8 @@
       </div>
       <p class="rule-hint">
         折页方式：每张纸左右对折后骑马钉装订。正面左侧为大页码、右侧为小页码；
-        翻面后背面左右互换，逐张向内递进。
+        翻面后背面左右互换，逐张向内递进。分册签帖模式下各帖分别折叠装订，
+        预览按帖号分组（标题含帖号 / 原始页范围 / 补白数 / 帖内纸张编号）。
       </p>
       <div id="sheets" class="sheets"></div>
     </section>

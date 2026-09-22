@@ -3,7 +3,7 @@
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
-const { imposePdf } = require('./lib/impose');
+const { imposePdf, normalizeSheetsPerSignature } = require('./lib/impose');
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 3000;
@@ -36,7 +36,16 @@ app.post('/api/impose', upload.single('pdf'), async (req, res) => {
       return res.status(400).json({ error: '仅支持 PDF 文件' });
     }
 
-    const { pdfBytes, plan } = await imposePdf(req.file.buffer);
+    // 分册签帖：每帖最多纸张数（1～20 整数）；字段缺省/为空表示整册模式
+    // 非法上限属于请求参数错误，明确返回 400
+    let sheetsPerSignature;
+    try {
+      sheetsPerSignature = normalizeSheetsPerSignature(req.body && req.body.sheetsPerSignature);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { pdfBytes, plan } = await imposePdf(req.file.buffer, { sheetsPerSignature });
 
     // 页序方案为纯 ASCII JSON，放入自定义响应头供前端渲染预览
     res.setHeader('Content-Type', 'application/pdf');
